@@ -173,4 +173,22 @@ public class TodoTodoControllerTests {
                 .andExpect(jsonPath("$.done").value(true));
 
     }
+
+    @Test
+    void should_respond_404_when_update_non_existing_todo() throws Exception {
+        String requestBody = """
+                {
+                    "text": "Buy snacks",
+                    "done": true
+                }
+                """;
+
+        MockHttpServletRequestBuilder request = put("/todos/999")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody);
+
+        mockMvc.perform(request)
+                .andExpect(status().isNotFound());
+    }
+
 }

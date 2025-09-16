@@ -12,6 +12,11 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(ResponseException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseException NotFoundExceptionHandler(Exception exception) {
+        return new ResponseException(exception.getMessage());
+    }
 
     @ExceptionHandler(InvalidTodoException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)

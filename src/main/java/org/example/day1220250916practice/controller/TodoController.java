@@ -27,20 +27,13 @@ public class TodoController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     Todo createTodo(@Validated @RequestBody Todo todo) throws InvalidTodoException {
-        if (todo.getText() == null || todo.getText().trim().isEmpty()) {
-            throw new InvalidTodoException("Todo text must not be empty");
-        } else {
-            todo.setId(null);
-            return todoService.createTodo(todo);
-        }
+        todo.setId(null);
+        return todoService.createTodo(todo);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     Todo updateTodo(@PathVariable String id, @Validated @RequestBody Todo todo) throws InvalidTodoException {
-        if (todo.getText() == null || todo.getText().trim().isEmpty()) {
-            throw new InvalidTodoException("Todo text must not be empty");
-        }
         return todoService.updateTodo(id, todo);
     }
 
