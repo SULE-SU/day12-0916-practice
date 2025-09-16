@@ -1,7 +1,6 @@
 package org.example.day1220250916practice.controller;
 
 import org.example.day1220250916practice.entity.Todo;
-import org.example.day1220250916practice.repository.TodoRepository;
 import org.example.day1220250916practice.service.TodoService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
