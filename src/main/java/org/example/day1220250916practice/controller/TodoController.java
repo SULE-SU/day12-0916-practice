@@ -1,7 +1,7 @@
 package org.example.day1220250916practice.controller;
 
-import org.example.day1220250916practice.advice.InvalidTodoException;
-import org.example.day1220250916practice.entity.Todo;
+import org.example.day1220250916practice.dto.TodoRequest;
+import org.example.day1220250916practice.dto.TodoResponse;
 import org.example.day1220250916practice.service.TodoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -20,31 +20,25 @@ public class TodoController {
     }
 
     @GetMapping
-    List<Todo> index() {
+    public List<TodoResponse> index() {
         return todoService.index();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    Todo createTodo(@Validated @RequestBody Todo todo) throws InvalidTodoException {
-        todo.setId(null);
-        return todoService.createTodo(todo);
+    public TodoResponse createTodo(@RequestBody @Validated TodoRequest todoRequest) {
+        return todoService.createTodo(todoRequest);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    Todo updateTodo(@PathVariable String id, @Validated @RequestBody Todo todo) throws InvalidTodoException {
-        return todoService.updateTodo(id, todo);
+    public TodoResponse updateTodo(@PathVariable String id, @RequestBody @Validated TodoRequest todoRequest) {
+        return todoService.updateTodo(id, todoRequest);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    void deleteTodo(@PathVariable String id) {
+    public void deleteTodo(@PathVariable String id) {
         todoService.deleteTodo(id);
     }
-
-
-
-
-
 }

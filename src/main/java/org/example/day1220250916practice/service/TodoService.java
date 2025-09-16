@@ -1,5 +1,8 @@
 package org.example.day1220250916practice.service;
 
+import org.example.day1220250916practice.dto.TodoRequest;
+import org.example.day1220250916practice.dto.TodoResponse;
+import org.example.day1220250916practice.dto.mapper.TodoMapper;
 import org.example.day1220250916practice.entity.Todo;
 import org.example.day1220250916practice.repository.TodoRepository;
 import org.springframework.http.HttpStatus;
@@ -13,29 +16,33 @@ import java.util.Optional;
 public class TodoService {
 
     private final TodoRepository todoRepository;
+    private final TodoMapper todoMapper;
 
-    public TodoService(TodoRepository todoRepository) {
+    public TodoService(TodoRepository todoRepository, TodoMapper todoMapper) {
         this.todoRepository = todoRepository;
+        this.todoMapper = todoMapper;
     }
 
-    public List<Todo> index() {
-        return todoRepository.findAll();
+    public List<TodoResponse> index() {
+        return todoMapper.toResponse(todoRepository.findAll());
     }
 
-    public Todo createTodo(Todo todo) {
-        return todoRepository.save(todo);
+    public TodoResponse createTodo(TodoRequest todoRequest) {
+        Todo todo = todoMapper.toEntity(todoRequest);
+        todo.setId(null);
+        return todoMapper.toResponse(todoRepository.save(todo));
     }
 
-    public Todo updateTodo(String id, Todo updatedTodo) {
+    public TodoResponse updateTodo(String id, TodoRequest todoRequest) {
         Optional<Todo> optionalTodo = todoRepository.findById(id);
         if (optionalTodo.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Company not found with id: " + id);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Todo not found with id: " + id);
         }
         Todo existingTodo = optionalTodo.get();
-        existingTodo.setText(updatedTodo.getText());
-        existingTodo.setDone(updatedTodo.isDone());
+        existingTodo.setText(todoRequest.getText());
+        existingTodo.setDone(todoRequest.isDone());
 
-        return todoRepository.save(existingTodo);
+        return todoMapper.toResponse(todoRepository.save(existingTodo));
     }
 
     public void deleteTodo(String id) {
@@ -45,5 +52,4 @@ public class TodoService {
         }
         todoRepository.deleteById(id);
     }
-
 }
