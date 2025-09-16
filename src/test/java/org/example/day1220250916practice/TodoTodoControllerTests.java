@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class TodoControllerTests {
+public class TodoTodoControllerTests {
 
     @Autowired
     MockMvc mockMvc;
@@ -77,4 +77,22 @@ public class TodoControllerTests {
 
 
     }
+
+    @Test
+    void should_respond_422_when_create_todo_with_empty_text() throws Exception {
+        String requestBody = """
+                {
+                    "text": "",
+                    "done": false
+                }
+                """;
+
+        MockHttpServletRequestBuilder request = post("/todos")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody);
+
+        mockMvc.perform(request)
+                .andExpect(status().isUnprocessableEntity());
+    }
+
 }

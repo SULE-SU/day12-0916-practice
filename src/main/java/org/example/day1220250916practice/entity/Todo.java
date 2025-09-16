@@ -3,6 +3,7 @@ package org.example.day1220250916practice.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,9 +15,11 @@ import java.util.UUID;
 public class Todo {
     @Id
     private String id;
-    private String text;
-    private boolean done;
 
+    @NotBlank(message = "Text cannot be empty")
+    private String text;
+
+    private boolean done;
 
     public Todo(String id, String text, boolean done) {
         this.id = id;
