@@ -35,6 +35,16 @@ public class TodoController {
         }
     }
 
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    Todo updateTodo(@PathVariable String id, @Validated @RequestBody Todo todo) throws InvalidTodoException {
+        if (todo.getText() == null || todo.getText().trim().isEmpty()) {
+            throw new InvalidTodoException("Todo text must not be empty");
+        }
+        return todoService.updateTodo(id, todo);
+    }
+
+
 
 
 }
