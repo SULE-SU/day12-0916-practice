@@ -1,4 +1,4 @@
-package org.example.day1220250916practice;
+package org.example.day1220250916practice.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

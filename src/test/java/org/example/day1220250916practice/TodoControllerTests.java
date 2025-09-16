@@ -1,6 +1,7 @@
 package org.example.day1220250916practice;
 
-import com.jayway.jsonpath.JsonPath;
+import org.example.day1220250916practice.entity.Todo;
+import org.example.day1220250916practice.repository.TodoRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
