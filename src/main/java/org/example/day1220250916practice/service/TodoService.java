@@ -27,12 +27,12 @@ public class TodoService {
     public Todo updateTodo(String id, Todo updatedTodo) {
         Todo existingTodo = todoRepository.findById(id)
                 .orElseThrow(() -> new InvalidTodoException("Todo not found"));
+
         existingTodo.setText(updatedTodo.getText());
         existingTodo.setDone(updatedTodo.isDone());
 
         return todoRepository.save(existingTodo);
     }
-
 
 
 }
