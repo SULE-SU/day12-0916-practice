@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -214,6 +215,20 @@ public class TodoTodoControllerTests {
         mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andExpect(header().string("Access-Control-Allow-Origin", "*"));
+    }
+
+    @Test
+    void should_respond_204_when_delete_existing_todo() throws Exception {
+        Todo existingTodo = new Todo("123", "Buy milk", false);
+        todoRepository.save(existingTodo);
+
+        MockHttpServletRequestBuilder request = delete("/todos/123")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(request)
+                .andExpect(status().isNoContent());
+
+        assertFalse(todoRepository.existsById("123"));
     }
 
 
