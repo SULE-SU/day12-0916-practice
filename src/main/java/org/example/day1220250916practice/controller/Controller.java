@@ -2,9 +2,8 @@ package org.example.day1220250916practice.controller;
 
 import org.example.day1220250916practice.entity.Todo;
 import org.example.day1220250916practice.service.TodoService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,4 +21,11 @@ public class Controller {
     List<Todo> index() {
         return todoService.index();
     }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    Todo createTodo(@RequestBody Todo todo) {
+        return todoService.createTodo(todo);
+    }
+
 }
