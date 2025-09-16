@@ -95,4 +95,21 @@ public class TodoTodoControllerTests {
                 .andExpect(status().isUnprocessableEntity());
     }
 
+    @Test
+    void should_respond_422_when_create_todo_without_text_field() throws Exception {
+        String requestBody = """
+                {
+                    "done": false
+                }
+                """;
+
+        MockHttpServletRequestBuilder request = post("/todos")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody);
+
+        mockMvc.perform(request)
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+
 }
