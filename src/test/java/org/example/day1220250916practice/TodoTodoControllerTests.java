@@ -231,5 +231,15 @@ public class TodoTodoControllerTests {
         assertFalse(todoRepository.existsById("123"));
     }
 
+    @Test
+    void should_respond_404_when_delete_non_existing_todo() throws Exception {
+        MockHttpServletRequestBuilder request = delete("/todos/999")
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(request)
+                .andExpect(status().isNotFound());
+    }
+
+
 
 }
