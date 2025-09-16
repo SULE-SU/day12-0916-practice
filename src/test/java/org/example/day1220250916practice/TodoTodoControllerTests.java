@@ -12,8 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -204,6 +203,17 @@ public class TodoTodoControllerTests {
 
         mockMvc.perform(request)
                 .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
+    void should_allow_cors() throws Exception {
+        MockHttpServletRequestBuilder request = get("/todos")
+                .header("Access-Control-Request-Method", "GET", "POST", "PUT", "DELETE")
+                .header("Origin", "http://localhost:3000");
+
+        mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(header().string("Access-Control-Allow-Origin", "*"));
     }
 
 
