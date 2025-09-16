@@ -111,5 +111,21 @@ public class TodoTodoControllerTests {
                 .andExpect(status().isUnprocessableEntity());
     }
 
+    @Test
+    void should_ignore_client_sent_id_and_generate_own_id() throws Exception {
+        String requestBody = """
+                {
+                    "id": "client-sent",
+                    "text": "Buy bread",
+                    "done": false
+                }
+                """;
 
+        MockHttpServletRequestBuilder request = post("/todos")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody);
+        mockMvc.perform(request)
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(org.hamcrest.Matchers.not("client-sent")));
+    }
 }

@@ -30,6 +30,7 @@ public class TodoController {
         if (todo.getText() == null || todo.getText().trim().isEmpty()) {
             throw new InvalidTodoException("Todo text must not be empty");
         } else {
+            todo.setId(null);
             return todoService.createTodo(todo);
         }
     }
