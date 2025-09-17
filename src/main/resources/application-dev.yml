@@ -1,8 +1,8 @@
 spring:
   ai:
     openai:
-      base-url: https://api.deepseek.com
-      api-key: sk-f6298cc89c244543aa6e91391ad4bf6b
+      base-url: https://api.moonshot.cn/
+      api-key: sk-FKJQRJabE02p5RflI3y8JJA0u6IoabjOqpwMBFg8r2pJfJxz
       chat:
         options:
-          model: deepseek-chat
+          model: moonshot-v1-128k
